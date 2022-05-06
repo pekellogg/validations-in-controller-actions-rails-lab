@@ -8,13 +8,16 @@ class PostsController < ApplicationController
   end
 
   def update
-    @post.update(post_params)
-
-    redirect_to post_path(@post)
+    # create, save, update, & respective bang versions => triggers validations, save to db if valid
+    if @post.update(post_params)
+      redirect_to post_path(@post)
+    else
+      render :edit
+    end
   end
 
   private
-
+  # params.require(:post)
   def post_params
     params.permit(:category, :content, :title)
   end
